@@ -1,5 +1,9 @@
-import { useState } from "react";
-import "./App.css";
+import React, { useState } from "react";
+// import "./App.css";
+
+import FormularyIMC from "./FormularyIMC";
+import ResultIMC from "./ResultIMC";
+import TableIMC from "./TableIMC";
 
 function App() {
   const [height, setHeight] = useState("");
@@ -40,58 +44,18 @@ function App() {
     <>
       <div className="App">
         <h1>Calculadora de IMC em React</h1>
-        <div className="form">
-          <input
-            type="number"
-            placeholder="Altura (cm)"
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
-          />
-          <input
-            type="number"
-            placeholder="Peso (kg)"
-            value={width}
-            onChange={(e) => setWidth(e.target.value)}
-          />
-          <button onClick={calculateIMC}>Calcular IMC</button>
-        </div>
-        {imc !== null && (
-          <div className="result">
-            <p>Seu IMC é: {imc}</p>
-            <p>Classificação: {sortIMC()}</p>
-          </div>
-        )}
+        <FormularyIMC
+          height={height}
+          width={width}
+          setHeight={setHeight}
+          setWidth={setWidth}
+          calculateIMC={calculateIMC}
+        />
+        {imc !== null && <ResultIMC imc={imc} sortIMC={sortIMC} />}
         <button onClick={toggleTable}>
           {showTable ? "Ocultar Tabela" : "Mostrar Tabela"}
         </button>
-        {showTable && (
-          <table>
-            <thead>
-              <tr>
-                <th>Classificação</th>
-                <th>IMC</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Abaixo do peso</td>
-                <td>Menor que 18.5</td>
-              </tr>
-              <tr>
-                <td>Peso normal</td>
-                <td>18.5 - 24.9</td>
-              </tr>
-              <tr>
-                <td>Sobrepeso</td>
-                <td>25 - 29.9</td>
-              </tr>
-              <tr>
-                <td>Obesidade</td>
-                <td>30 ou mais</td>
-              </tr>
-            </tbody>
-          </table>
-        )}
+        <TableIMC showTable={showTable} />
       </div>
     </>
   );
